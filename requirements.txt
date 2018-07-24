@@ -1,0 +1,9 @@
+Flask==0.12.2
+Flask-Script==2.0.5
+flask-nameko==1.4.0
+oss2==2.4.0
+gunicorn
+ujson
+
+xlrd==1.1.0
+xlsxwriter==1.0.5
