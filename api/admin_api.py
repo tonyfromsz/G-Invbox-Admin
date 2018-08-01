@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import logging
 from flask import jsonify
 from api import api
 from app import rpc
 from flask.views import MethodView
 from flask_util import HttpError, RequestData, login_manager, login_required, current_user
 from util import is_mobile
+
+logger = logging.getLogger(__name__)
 
 
 @login_manager.user_loader
@@ -35,10 +38,11 @@ def login():
         "id": res["id"],
         "role": res["role"],
         "createdAt": res["createdAt"],
-        "adminRange": res["adminRange"],    # 补货员-补货员id， 场地方-场地id， 品牌方-商品id
-        "adminRange2": res["adminRange2"]   # 品牌方-场地id
+        "range": res["range"],    # 补货员-补货员id， 场地方-场地id， 品牌方-商品id
+        "infoList": res["infoList"]   # 品牌方-场地id
     })
     login_manager.login_user(res)
+    # logger.info(current_user.get("username"), current_user.get("id"), current_user.get("role"), "登录成功")
     return resp
 
 
