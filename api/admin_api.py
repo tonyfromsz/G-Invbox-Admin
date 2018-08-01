@@ -223,15 +223,25 @@ def login_test():
 
 class AccountAPI(MethodView):
 
-    # @login_required
+    @login_required
     def get(self):
+        if current_user["role"] != 0:
+            return {
+                "resultCode": 1,
+                "resultMsg": "您没有操作权限"
+            }
         rdata = RequestData()
         accounts = rpc.invbox.get_accounts(page=rdata.page,
                                            page_size=rdata.page_size)
         return jsonify(accounts)
 
-    # @login_required
+    @login_required
     def post(self):
+        if current_user["role"] != 0:
+            return {
+                "resultCode": 1,
+                "resultMsg": "您没有操作权限"
+            }
         rdata = RequestData()
 
         name = rdata.get('name', type=str)
@@ -262,8 +272,14 @@ class AccountAPI(MethodView):
             raise HttpError(400, "%s" % new_account.get("resultMsg"))
         return jsonify(new_account)
 
-    # @login_required
+    @login_required
     def delete(self):
+        if current_user["role"] != 0:
+            print(current_user["role"])
+            return jsonify({
+                "resultCode": 1,
+                "resultMsg": "您没有操作权限"
+            })
         rdata = RequestData()
         data = rpc.invbox.delete_account(rdata.array)
 
@@ -272,8 +288,13 @@ class AccountAPI(MethodView):
 
         return jsonify(data)
 
-    # @login_required
+    @login_required
     def put(self):
+        if current_user["role"] != 0:
+            return {
+                "resultCode": 1,
+                "resultMsg": "您没有操作权限"
+            }
         rdata = RequestData()
 
         params = []
