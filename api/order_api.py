@@ -4,7 +4,7 @@ from flask import jsonify, request, current_app as app
 from datetime import datetime as dte
 from api import api
 from app import rpc
-from flask_util import RequestData, login_required
+from flask_util import RequestData, login_required, current_user
 from flask.views import MethodView
 
 
@@ -13,10 +13,20 @@ class OrderAPI(MethodView):
     @login_required
     def get(self):
         rdata = RequestData()
+        if current_user.get("role") == 1:
+            return jsonify({
+                "resultCode": 1,
+                "resultMsg": "补货员没有订单查看权限"
+            })
+        admin_info = {"id": current_user["id"],
+                      "role": current_user["role"]}
+
         data = rpc.invbox.get_orders(page=rdata.page,
                                      page_size=rdata.page_size,
                                      query=rdata.condition,
-                                     base_url=app.config["DOMAIN"])
+                                     base_url=app.config["DOMAIN"],
+                                     admin_info=admin_info
+                                     )
         return jsonify(data)
 
 

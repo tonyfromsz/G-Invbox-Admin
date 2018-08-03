@@ -53,19 +53,19 @@ class Xlsx:
     def __init__(self):
         self.xslx_mapping = {
             "order": {
-                "map": ["", "", "",
-                        "", "",
-                        "", "", "", "",
-                        "", "", "", "", "", "", ""],
+                "map": ["year", "month", "day",
+                        "device_id", "address_type",
+                        "user_id", "user_mobile", "wx_ali_user_id", "user_name",
+                        "item_no", "item_brand", "item_name", "count", "pay_money", "consume_code"],
                 "titles": ["年", "月", "日",
-                           "小粉盒ID", "小粉盒所在地",
-                           "小粉盒ID（会员一级ID）", "手机号（会员二级ID）", "用户名（默认的微信名）",
+                           "小粉盒ID", "点位",
+                           "小粉盒ID（会员一级ID）", "手机号（会员二级ID）", "微信号/支付宝ID（会员三级ID）", "用户名（默认的微信名）",
                            "商品编号", "商品品牌", "产品名", "购买数量", "支付金额", "兑换码"],
                 "filename": "table_invbox_member_order"
             },
             "inventory": {
-                "map": ["", "", "", "", "", "",
-                        "", "", "", "", ""],
+                "map": ["year", "month", "day", "hour", "minute", "second",
+                        "device_id", "address_type", "road_id", "item_name", "amount"],
                 "title": ["年", "月", "日", "时", "分",
                           "小粉盒ID", "小粉盒所在地", "货道ID", "产品名称", "剩余库存"],
                 "filename": "table_invbox_current_inventory"
@@ -81,9 +81,17 @@ class Xlsx:
             }
         }
 
-    def run(self, data_function, new_args, item):
+    def run(self, data_function, rdata, item):
         assert callable(function)
-        body = data_function(**new_args)
+        outcome = data_function(rdata)
         data_dict = self.xslx_mapping[item]
-        out_put = to_xlsx(body=body.get('list'), titles=body.get('titles'), mapping=data_dict.get('map'))
+        titles = data_dict.get("titles")
+        mapping = data_dict.get("map")
+        for field in outcome["del_field"]:
+            mapping.remove(field)
+        for field in outcome["del_tb_field"]:
+            titles.remove(field)
+        body = outcome["data"]
+
+        out_put = to_xlsx(body=body, titles=titles, mapping=mapping)
         return out_put

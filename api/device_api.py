@@ -3,7 +3,7 @@
 from flask import jsonify, request, current_app as app
 from api import api
 from app import rpc
-from flask_util import HttpError, RequestData, login_required
+from flask_util import HttpError, RequestData, login_required, current_user
 from flask.views import MethodView
 
 
@@ -207,11 +207,14 @@ class RoadAPI(MethodView):
                 "attribute": "device",
                 "value": int(request.args.get("device"))
             }])
+        admin_info = {"id": current_user["id"],
+                      "role": current_user["role"]}
 
         devices = rpc.invbox.get_roads(page=rdata.page,
                                        page_size=rdata.page_size,
                                        query=condition,
-                                       base_url=app.config["DOMAIN"])
+                                       base_url=app.config["DOMAIN"],
+                                       admin_info=admin_info)
 
         return jsonify(devices)
 
