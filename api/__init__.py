@@ -18,6 +18,7 @@ import selector_api
 import markting_api
 import stats_api
 import wechat_api
+import report_api
 
 
 @api.before_request
