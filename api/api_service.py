@@ -16,7 +16,7 @@ class Report:
             })
         admin_info = {"id": current_user["id"],
                       "role": current_user["role"]}
-        data = rpc.get_orders(query=rdata.condition,
+        data = rpc.invbox.get_orders(query=rdata.condition,
                               base_url=app.config["DOMAIN"],
                               admin_info=admin_info,
                               export=True
@@ -74,7 +74,7 @@ class Report:
             "id": current_user["id"],
             "role": current_user["role"]
         }
-        data = rpc.get_roads(query=rdata.conditions,
+        data = rpc.invbox.get_roads(query=rdata.conditions,
                              base_url=app.config["DOMAIN"],
                              admin_info=admin_info,
                              export=True)
