@@ -81,9 +81,9 @@ class Xlsx:
             }
         }
 
-    def run(self, data_function, rdata, item):
-        assert callable(function)
-        outcome = data_function(rdata)
+    def run(self, data,  item):
+        # assert callable(function)
+        outcome = data
         data_dict = self.xslx_mapping[item]
         titles = data_dict.get("titles")
         mapping = data_dict.get("map")

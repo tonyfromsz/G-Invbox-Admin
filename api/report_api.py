@@ -30,10 +30,9 @@ def export(item):
         })
 
     rdata = RequestData()
-    data_function = data_mapping[item]
+    data = data_mapping[item](rdata)
 
-    output = xlsx.run(data_function=data_function, rdata=rdata,
-                      item=item)
+    output = xlsx.run(data=data, item=item)
     if not output:
         return jsonify({"code": -1, "message": "无数据", "data": {}})
     date_string = datetime.date.today().strftime("%Y%m%d_")
