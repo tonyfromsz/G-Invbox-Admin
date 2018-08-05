@@ -33,33 +33,30 @@ def is_mobile(number):
     return False
 
 
-def to_xlsx(titles, mapping, body=None):
-    assert isinstance(titles, list) and isinstance(mapping, list)
-    if not body:
-        return
-    out_put = BytesIO()
-    workbook = xlsxwriter.Workbook(out_put, {'in_memory': True})
-    worksheet = workbook.add_worksheet()
-    worksheet.write_row(0, 0, titles)
-    for i, record in enumerate(body):
-        item = [record.get(key) for key in mapping]
-        worksheet.write_row(i+1, 0, data=item)
-    workbook.close()
-    out_put.seek(0)
-    return out_put
-
-    # file_name = app.config["MEDIA_PATH"] + "/" + filename + ".xlsx"
-    # print(file_name)
-    # workbook = xlsxwriter.Workbook(filename=file_name)
+def to_xlsx(titles, mapping, filename, body=None):
+    # assert isinstance(titles, list) and isinstance(mapping, list)
+    # if not body:
+    #     return
+    # out_put = BytesIO()
+    # workbook = xlsxwriter.Workbook(out_put, {'in_memory': True})
     # worksheet = workbook.add_worksheet()
     # worksheet.write_row(0, 0, titles)
     # for i, record in enumerate(body):
     #     item = [record.get(key) for key in mapping]
     #     worksheet.write_row(i+1, 0, data=item)
     # workbook.close()
-    # # out_put.seek(0)
-    # # return out_put
-    # return filename
+    # out_put.seek(0)
+    # return out_put
+
+    file_name = app.config["MEDIA_PATH"] + "/" + filename + ".xlsx"
+    workbook = xlsxwriter.Workbook(filename=file_name)
+    worksheet = workbook.add_worksheet()
+    worksheet.write_row(0, 0, titles)
+    for i, record in enumerate(body):
+        item = [record.get(key) for key in mapping]
+        worksheet.write_row(i+1, 0, data=item)
+    workbook.close()
+    return filename
 
 
 
@@ -95,7 +92,7 @@ class Xlsx:
             }
         }
 
-    def run(self, data, item):
+    def run(self, data, item, filename):
         # assert callable(function)
         outcome = data
         data_dict = self.xslx_mapping[item]
@@ -106,7 +103,8 @@ class Xlsx:
         for field in outcome["del_tb_field"]:
             titles.remove(field)
         body = outcome["data"]
-        out_put = to_xlsx(body=body, titles=titles, mapping=mapping)
+        # out_put = to_xlsx(body=body, titles=titles, mapping=mapping)
+        out_put = to_xlsx(body=body, titles=titles, mapping=mapping, filename=filename)
         if not out_put:
             return
         else:

@@ -35,22 +35,23 @@ def export(item):
     data = data_mapping[item](rdata)
     filename = xlsx.xslx_mapping[item].get("filename")
     print("1")
-    output = xlsx.run(data=data, item=item)
+    output = xlsx.run(data=data, item=item, filename=filename)
+    # output = xlsx.run(data=data, item=item)
     if not output:
-        return jsonify({"code": -1, "message": "无数据", "data": {}})
+        return jsonify({"resultCode": 1, "resultMsg": "无数据"})
 
-    return send_file(output,
-                     mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                     as_attachment=True,
-                     attachment_filename="%s.xlsx" % (bytes(filename).decode("latin-1")))
+    # return send_file(output,
+    #                  mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    #                  as_attachment=True,
+    #                  attachment_filename="%s.xlsx" % (bytes(filename).decode("latin-1")))
     # print(file_dir + "/" + filename + '.xlsx')
-    # # return jsonify({"1":"haha"})
-    # return send_from_directory(directory=file_dir,
-    #                            filename=filename+'.xlsx',
-    #                            as_attachment=True,
-    #                            mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    #                            attachment_filename="%s.xlsx" % (bytes(filename).decode("latin-1"))
-    #                            )
+    # return jsonify({"1":"haha"})
+    return send_from_directory(directory=current_app.config["MEDIA_PATH"],
+                               filename=filename+'.xlsx',
+                               as_attachment=True,
+                               mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                               attachment_filename="%s.xlsx" % (bytes(filename).decode("latin-1"))
+                               )
                          # )
 
 
