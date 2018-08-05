@@ -33,30 +33,30 @@ def is_mobile(number):
     return False
 
 
-def to_xlsx(titles, mapping, filename, body=None):
-    # assert isinstance(titles, list) and isinstance(mapping, list)
-    # if not body:
-    #     return
-    # out_put = BytesIO()
-    # workbook = xlsxwriter.Workbook(out_put, {'in_memory': True})
-    # worksheet = workbook.add_worksheet()
-    # worksheet.write_row(0, 0, titles)
-    # for i, record in enumerate(body):
-    #     item = [record.get(key) for key in mapping]
-    #     worksheet.write_row(i+1, 0, data=item)
-    # workbook.close()
-    # out_put.seek(0)
-    # return out_put
-
-    file_name = app.config["MEDIA_PATH"] + "/" + filename + ".xlsx"
-    workbook = xlsxwriter.Workbook(filename=file_name)
+def to_xlsx(titles, mapping, filename=None, body=None):
+    assert isinstance(titles, list) and isinstance(mapping, list)
+    if not body:
+        return
+    out_put = BytesIO()
+    workbook = xlsxwriter.Workbook(out_put, {'in_memory': True})
     worksheet = workbook.add_worksheet()
     worksheet.write_row(0, 0, titles)
     for i, record in enumerate(body):
         item = [record.get(key) for key in mapping]
         worksheet.write_row(i+1, 0, data=item)
     workbook.close()
-    return filename
+    out_put.seek(0)
+    return out_put
+
+    # file_name = app.config["MEDIA_PATH"] + "/" + filename + ".xlsx"
+    # workbook = xlsxwriter.Workbook(filename=file_name)
+    # worksheet = workbook.add_worksheet()
+    # worksheet.write_row(0, 0, titles)
+    # for i, record in enumerate(body):
+    #     item = [record.get(key) for key in mapping]
+    #     worksheet.write_row(i+1, 0, data=item)
+    # workbook.close()
+    # return filename
 
 
 
@@ -72,14 +72,14 @@ class Xlsx:
                            "小粉盒ID", "点位",
                            "小粉盒ID（会员一级ID）", "手机号（会员二级ID）", "微信号/支付宝ID（会员三级ID）", "用户名（默认的微信名）",
                            "商品编号", "商品品牌", "产品名", "购买数量", "支付金额", "兑换码"],
-                "filename": "小粉盒订单数据"
+                "filename": "invbox_orders"
             },
             "inventory": {
                 "map": ["year", "month", "day", "hour", "minute", "second",
                         "device_id", "address_type", "road_id", "item_name", "amount"],
                 "title": ["年", "月", "日", "时", "分",
                           "小粉盒ID", "小粉盒所在地", "货道ID", "产品名称", "剩余库存"],
-                "filename": "小粉盒库存数据"
+                "filename": "invbox_invents"
             },
             "user-monitor": {
                 "map": ["", "", "", "", "",
@@ -88,11 +88,11 @@ class Xlsx:
                 "titles": ["起始年", "月", "日", "时", "分",
                            "截止年", "月", "日", "时", "分",
                            "触达用户数", "深度触达用户数", "互动用户数"],
-                "filename": "table_invbox_user_monitor"
+                "filename": "invbox_user_monitor"
             }
         }
 
-    def run(self, data, item, filename):
+    def run(self, data, item, filename=None):
         # assert callable(function)
         outcome = data
         data_dict = self.xslx_mapping[item]
@@ -103,8 +103,8 @@ class Xlsx:
         for field in outcome["del_tb_field"]:
             titles.remove(field)
         body = outcome["data"]
-        # out_put = to_xlsx(body=body, titles=titles, mapping=mapping)
-        out_put = to_xlsx(body=body, titles=titles, mapping=mapping, filename=filename)
+        out_put = to_xlsx(body=body, titles=titles, mapping=mapping)
+        # out_put = to_xlsx(body=body, titles=titles, mapping=mapping, filename=filename)
         if not out_put:
             return
         else:
