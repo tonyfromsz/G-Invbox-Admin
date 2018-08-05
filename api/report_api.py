@@ -2,7 +2,7 @@
 import datetime
 import logging
 from api_service import Report
-from flask import send_file, request, current_app
+from flask import send_file, request, current_app, send_from_directory, make_response, Response
 from api import api
 from flask_util import RequestData, HttpError, login_required, current_user
 from flask import jsonify
@@ -22,7 +22,7 @@ data_mapping = {"order": Rpt.order_export_handling,
 xlsx = Xlsx()
 
 
-@api.route("/export/<string:item>")
+@api.route("/media/export/<string:item>")
 @login_required
 def export(item):
     if item not in data_mapping.keys():
@@ -33,16 +33,26 @@ def export(item):
 
     rdata = RequestData()
     data = data_mapping[item](rdata)
-
+    filename = xlsx.xslx_mapping[item].get("filename")
+    print("1")
     output = xlsx.run(data=data, item=item)
     if not output:
         return jsonify({"code": -1, "message": "无数据", "data": {}})
-    date_string = datetime.date.today().strftime("%Y%m%d_")
-    filename = date_string + xlsx.xslx_mapping[item].get("filename")
+
     return send_file(output,
-                     mimetype="",
+                     mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                      as_attachment=True,
                      attachment_filename="%s.xlsx" % (bytes(filename).decode("latin-1")))
+    # print(file_dir + "/" + filename + '.xlsx')
+    # # return jsonify({"1":"haha"})
+    # return send_from_directory(directory=file_dir,
+    #                            filename=filename+'.xlsx',
+    #                            as_attachment=True,
+    #                            mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    #                            attachment_filename="%s.xlsx" % (bytes(filename).decode("latin-1"))
+    #                            )
+                         # )
+
 
 
 @api.route("/export/test")

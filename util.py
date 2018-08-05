@@ -48,6 +48,20 @@ def to_xlsx(titles, mapping, body=None):
     out_put.seek(0)
     return out_put
 
+    # file_name = app.config["MEDIA_PATH"] + "/" + filename + ".xlsx"
+    # print(file_name)
+    # workbook = xlsxwriter.Workbook(filename=file_name)
+    # worksheet = workbook.add_worksheet()
+    # worksheet.write_row(0, 0, titles)
+    # for i, record in enumerate(body):
+    #     item = [record.get(key) for key in mapping]
+    #     worksheet.write_row(i+1, 0, data=item)
+    # workbook.close()
+    # # out_put.seek(0)
+    # # return out_put
+    # return filename
+
+
 
 class Xlsx:
     def __init__(self):
@@ -61,14 +75,14 @@ class Xlsx:
                            "小粉盒ID", "点位",
                            "小粉盒ID（会员一级ID）", "手机号（会员二级ID）", "微信号/支付宝ID（会员三级ID）", "用户名（默认的微信名）",
                            "商品编号", "商品品牌", "产品名", "购买数量", "支付金额", "兑换码"],
-                "filename": "table_invbox_member_order"
+                "filename": "小粉盒订单数据"
             },
             "inventory": {
                 "map": ["year", "month", "day", "hour", "minute", "second",
                         "device_id", "address_type", "road_id", "item_name", "amount"],
                 "title": ["年", "月", "日", "时", "分",
                           "小粉盒ID", "小粉盒所在地", "货道ID", "产品名称", "剩余库存"],
-                "filename": "table_invbox_current_inventory"
+                "filename": "小粉盒库存数据"
             },
             "user-monitor": {
                 "map": ["", "", "", "", "",
@@ -81,7 +95,7 @@ class Xlsx:
             }
         }
 
-    def run(self, data,  item):
+    def run(self, data, item):
         # assert callable(function)
         outcome = data
         data_dict = self.xslx_mapping[item]
@@ -92,6 +106,10 @@ class Xlsx:
         for field in outcome["del_tb_field"]:
             titles.remove(field)
         body = outcome["data"]
-
         out_put = to_xlsx(body=body, titles=titles, mapping=mapping)
-        return out_put
+        if not out_put:
+            return
+        else:
+            return out_put
+        # out_put = to_xlsx(body=body, titles=titles, mapping=mapping, filename=filename)
+        # return out_put

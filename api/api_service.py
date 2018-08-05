@@ -22,7 +22,7 @@ class Report:
                               export=True
                               )
         result = []
-        for rec in data["item"]:
+        for rec in data["items"]:
             device = rec["device"]
             item = rec["item"]
             redeem = rec["redeem"]
@@ -30,10 +30,13 @@ class Report:
             user = rec["user"]
             wxuserid = user.get("wxuserid") or ""
             aliuserid = user.get("aliuserid") or ""
+
+            create_at = dte.datetime.strptime(rec["createdAt"], "%Y-%m-%d %H:%M:%S")
+
             record = {
-                "year": rec["createdAt"].year,      # 年
-                "month": rec["createdAt"].month,    # 月
-                "day": rec["createdAt"].day,        # 日
+                "year": create_at.year,      # 年
+                "month": create_at.month,    # 月
+                "day": create_at.day,        # 日
                 "device_id": device["id"],          # 小粉盒ID
                 "address_type": device["address"],    # 点位
                 "user_id": user["id"],              # 后台会员ID
@@ -43,8 +46,8 @@ class Report:
                 "item_no": item["no"],              # 商品编号
                 "item_brand": item["brand_name"],   # 商品品牌
                 "item_name": item["name"],          # 产品名
-                "count": item["count"],             # 购买数量
-                "pay_money": item["payMoney"],      # 支付金额
+                "count": rec["count"],             # 购买数量
+                "pay_money": rec["payMoney"],      # 支付金额
                 "consume_code": redeem.get("code")  # 兑换吗
             }
             result.append(record)
