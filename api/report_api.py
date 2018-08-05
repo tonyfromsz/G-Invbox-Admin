@@ -33,25 +33,37 @@ def export(item):
 
     rdata = RequestData()
     data = data_mapping[item](rdata)
-    filename = xlsx.xslx_mapping[item].get("filename")
-    print("1")
-    output = xlsx.run(data=data, item=item, filename=filename)
-    # output = xlsx.run(data=data, item=item)
+    print(dict(current_user))
+    role = current_user.get("role")
+    username = current_user.get("username")
+    if not username:
+        username = ""
+
+    if role in [0, 1, 2, 3]:
+        role_string = "role" + str(role)
+    else:
+        role_string = ""
+    timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M_")
+
+    filename = timestamp + username + "_" + role_string + "_" + xlsx.xslx_mapping[item].get("filename")
+    print(filename)
+    # output = xlsx.run(data=data, item=item, filename=filename)
+    output = xlsx.run(data=data, item=item)
     if not output:
         return jsonify({"resultCode": 1, "resultMsg": "无数据"})
 
-    # return send_file(output,
-    #                  mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    #                  as_attachment=True,
-    #                  attachment_filename="%s.xlsx" % (bytes(filename).decode("latin-1")))
+    return send_file(output,
+                     mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                     as_attachment=True,
+                     attachment_filename="%s.xlsx" % filename)
     # print(file_dir + "/" + filename + '.xlsx')
     # return jsonify({"1":"haha"})
-    return send_from_directory(directory=current_app.config["MEDIA_PATH"],
-                               filename=filename+'.xlsx',
-                               as_attachment=True,
-                               mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                               attachment_filename="%s.xlsx" % (bytes(filename).decode("latin-1"))
-                               )
+    # return send_from_directory(directory=current_app.config["MEDIA_PATH"],
+    #                            filename=filename+'.xlsx',
+    #                            as_attachment=True,
+    #                            mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    #                            attachment_filename="%s.xlsx" % (bytes(filename).decode("latin-1"))
+    #                            )
                          # )
 
 
