@@ -78,9 +78,10 @@ class Report:
             "role": current_user["role"]
         }
         data = rpc.invbox.get_roads(query=rdata.condition,
-                             base_url=app.config["DOMAIN"],
-                             admin_info=admin_info,
-                             export=True)
+                                    base_url=app.config["DOMAIN"],
+                                    admin_info=admin_info,
+                                    export=True)
+        print("data", data)
         result = []
         for rec in data["items"]:
             device = rec["device"]

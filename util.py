@@ -35,8 +35,6 @@ def is_mobile(number):
 
 def to_xlsx(titles, mapping, filename=None, body=None):
     assert isinstance(titles, list) and isinstance(mapping, list)
-    # if not body:
-    #     return
     out_put = BytesIO()
     workbook = xlsxwriter.Workbook(out_put, {'in_memory': True})
     worksheet = workbook.add_worksheet()
@@ -99,18 +97,13 @@ class Xlsx:
         mapping_list = data_dict.get("map")
         titles = []
         mapping = []
-        for title in titles_list
-            if title not in data["del_field"]:
-                mapping.append(title)
+        for title in titles_list:
+            if title not in data["del_tb_field"]:
+                titles.append(title)
         for field in mapping_list:
-            if field not in data["del_tb_field"]:
-                titles.append(field)
+            if field not in data["del_field"]:
+                mapping.append(field)
         body = data["data"]
         out_put = to_xlsx(body=body, titles=titles, mapping=mapping)
-        # out_put = to_xlsx(body=body, titles=titles, mapping=mapping, filename=filename)
-        if not out_put:
-            return
-        else:
-            return out_put
-        # out_put = to_xlsx(body=body, titles=titles, mapping=mapping, filename=filename)
-        # return out_put
+
+        return out_put

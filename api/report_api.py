@@ -30,12 +30,13 @@ def export(item):
             "resultCode": 1,
             "resultMsg": "错误的参数%s" % item
         })
-
+    log.info(item)
     rdata = RequestData()
     data = data_mapping[item](rdata)
-    print(dict(current_user))
+
     role = current_user.get("role")
     username = current_user.get("username")
+
     if not username:
         username = ""
 
@@ -46,7 +47,6 @@ def export(item):
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M_")
 
     filename = timestamp + username + "_" + role_string + "_" + xlsx.xslx_mapping[item].get("filename")
-    print(filename)
     # output = xlsx.run(data=data, item=item, filename=filename)
     output = xlsx.run(data=data, item=item)
     if not output:
