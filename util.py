@@ -77,7 +77,7 @@ class Xlsx:
             "inventory": {
                 "map": ["year", "month", "day", "hour", "minute", "second",
                         "device_id", "address_type", "road_id", "item_name", "amount"],
-                "titles": ["年", "月", "日", "时", "分",
+                "titles": ["年", "月", "日", "时", "分", "秒"
                           "小粉盒ID", "小粉盒所在地", "货道ID", "产品名称", "剩余库存"],
                 "filename": "invbox_invents"
             },
@@ -95,12 +95,16 @@ class Xlsx:
     def run(self, data, item, filename=None):
         # assert callable(function)
         data_dict = self.xslx_mapping[item]
-        titles = data_dict.get("titles")
-        mapping = data_dict.get("map")
-        for field in data["del_field"]:
-            mapping.remove(field)
-        for field in data["del_tb_field"]:
-            titles.remove(field)
+        titles_list = data_dict.get("titles")
+        mapping_list = data_dict.get("map")
+        titles = []
+        mapping = []
+        for title in titles_list
+            if title not in data["del_field"]:
+                mapping.append(title)
+        for field in mapping_list:
+            if field not in data["del_tb_field"]:
+                titles.append(field)
         body = data["data"]
         out_put = to_xlsx(body=body, titles=titles, mapping=mapping)
         # out_put = to_xlsx(body=body, titles=titles, mapping=mapping, filename=filename)
