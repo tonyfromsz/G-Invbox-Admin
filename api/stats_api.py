@@ -585,13 +585,13 @@ class ConversionAPI(MethodView):
 # }
 
 
-@api.route("/dashboard/<string:scale>")
+@api.route("/admin/dashboard/<string:scale>")
 @login_required
 def dashboard(scale):
     data = {}
     if scale == "flows":
         data = rpc.invbox.dashboard_flow_volume()
-    if scale == "flow-rank":
+    if scale == "flows-rank":
         data = rpc.invbox.dashboard_flow_volume_rank()
     if scale == "user-stats":
         data = rpc.invbox.dashboard_user_stats()
