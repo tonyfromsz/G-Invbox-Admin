@@ -596,7 +596,7 @@ def dashboard(scale):
     if scale == "user-stats":
         data = rpc.invbox.dashboard_user_stats()
     if scale == "device-stats":
-        data = rpc.invbox.rpc.invbox.dashboard_device_stats()
+        data = rpc.invbox.dashboard_device_stats()
     if scale == "sales-stats":
         data = rpc.invbox.dashboard_sales_stats()
     if scale == "item-device-rank":
