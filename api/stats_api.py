@@ -575,6 +575,36 @@ class ConversionAPI(MethodView):
         return stats
 
 
+# dashboard_mapping = {
+#     "flows": rpc.invbox.dashboard_flow_volume,
+#     "flow-rank": rpc.invbox.dashboard_flow_volume_rank,
+#     "user-stats": rpc.invbox.dashboard_user_stats,
+#     "device-stats": rpc.invbox.dashboard_device_stats,
+#     "sales-stats": rpc.invbox.dashboard_sales_stats,
+#     "item-device-rank": rpc.invbox.dashboard_item_device_rank
+# }
+
+
+@api.route("/dashboard/<string:scale>")
+@login_required
+def dashboard(scale):
+    data = {}
+    if scale == "flows":
+        data = rpc.invbox.dashboard_flow_volume()
+    if scale == "flow-rank":
+        data = rpc.invbox.dashboard_flow_volume_rank()
+    if scale == "user-stats":
+        data = rpc.invbox.dashboard_user_stats()
+    if scale == "device-stats":
+        data = rpc.invbox.rpc.invbox.dashboard_device_stats()
+    if scale == "sales-stats":
+        data = rpc.invbox.dashboard_sales_stats()
+    if scale == "item-device-rank":
+        data = rpc.invbox.dashboard_item_device_rank()
+
+    return jsonify(data)
+
+
 api.add_url_rule('/admin/stat/overview', view_func=OverviewAPI.as_view('StatOverview'))
 api.add_url_rule('/admin/stat/trend', view_func=TrendAPI.as_view('StatTrend'))
 api.add_url_rule('/admin/stat/table', view_func=TableAPI.as_view('StatTable'))

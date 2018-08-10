@@ -30,7 +30,6 @@ def export(item):
             "resultCode": 1,
             "resultMsg": "错误的参数%s" % item
         })
-    log.info(item)
     rdata = RequestData()
     data = data_mapping[item](rdata)
 
