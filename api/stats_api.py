@@ -601,6 +601,8 @@ def dashboard(scale):
         data = rpc.invbox.dashboard_sales_stats()
     if scale == "itemDeviceRank":
         data = rpc.invbox.dashboard_item_device_rank()
+    if scale == "payConversionTrend":
+        data = rpc.invbox.dashboard_pay_conversion_trend()
 
     return jsonify(data)
 
