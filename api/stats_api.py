@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from flask import jsonify
+from flask import jsonify, current_app
 from api import api
 from app import rpc
-from flask_util import RequestData, login_required, HttpError
+from flask_util import RequestData, login_required, HttpError, current_user
 from flask.views import MethodView
 
 
@@ -583,6 +583,26 @@ class ConversionAPI(MethodView):
 #     "sales-stats": rpc.invbox.dashboard_sales_stats,
 #     "item-device-rank": rpc.invbox.dashboard_item_device_rank
 # }
+
+@api.route("/admin/stats/flows")
+@login_required
+def day_device_stats():
+    rdata = RequestData()
+    if current_user.get("role") == 1 or current_user.get("role") == 2:
+        return jsonify({
+            "resultCode": 1,
+            "resultMsg": "补货员和场地方没有流量查看权限"
+        })
+    admin_info = {"id": current_user["id"],
+                  "role": current_user["role"]}
+
+    data = rpc.invbox.get_flow_stats(page=rdata.page,
+                                     page_size=rdata.page_size,
+                                     query=rdata.condition,
+                                     base_url=current_app.config["DOMAIN"],
+                                     admin_info=admin_info
+                                     )
+    return jsonify(data)
 
 
 @api.route("/admin/dashboard/<string:scale>")
