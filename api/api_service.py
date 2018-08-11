@@ -112,10 +112,10 @@ class Report:
             "id": current_user["id"],
             "role": current_user["role"]
         }
-        data = rpc.invbox.get_roads(query=rdata.condition,
-                                    base_url=app.config["DOMAIN"],
-                                    admin_info=admin_info,
-                                    export=True)
+        data = rpc.invbox.get_flow_stats(query=rdata.condition,
+                                         base_url=app.config["DOMAIN"],
+                                         admin_info=admin_info,
+                                         export=True)
         # print("data", data)
 
         result = []
@@ -125,7 +125,7 @@ class Report:
                 "year": date[:4],
                 "month": date[5:7],
                 "day": date[8:],
-                "device": rec.["device"],
+                "device": rec["device"],
                 "address_type": rec["address_type"],
                 "flows": rec["flows"],
                 "stays": rec["stays"],

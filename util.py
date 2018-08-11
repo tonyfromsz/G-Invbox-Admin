@@ -79,7 +79,7 @@ class Xlsx:
                           "小粉盒ID", "小粉盒所在地", "货道ID", "产品名称", "剩余库存"],
                 "filename": "invbox_invents"
             },
-            "user-monitor": {
+            "flows": {
                 "map": ["year", "month", "day",
                         "device", "address_type",
                         "flows", "stays", "clicks"],
