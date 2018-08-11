@@ -107,6 +107,33 @@ class Report:
             "del_tb_field": []
         }
 
+    def flow_stat_export_handling(self, rdata):
+        admin_info = {
+            "id": current_user["id"],
+            "role": current_user["role"]
+        }
+        data = rpc.invbox.get_roads(query=rdata.condition,
+                                    base_url=app.config["DOMAIN"],
+                                    admin_info=admin_info,
+                                    export=True)
+        # print("data", data)
 
-def monitor_export_handling():
-    pass
+        result = []
+        for rec in data["items"]:
+            date = rec["day"]
+            record = {
+                "year": date[:4],
+                "month": date[5:7],
+                "day": date[8:],
+                "device": rec.["device"],
+                "address_type": rec["address_type"],
+                "flows": rec["flows"],
+                "stays": rec["stays"],
+                "clicks": rec["clicks"],
+            }
+            result.append(record)
+        return {
+            "data": result,
+            "del_field": [],
+            "del_tb_field": []
+        }

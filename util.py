@@ -80,13 +80,13 @@ class Xlsx:
                 "filename": "invbox_invents"
             },
             "user-monitor": {
-                "map": ["", "", "", "", "",
-                           "", "", "", "", "",
-                           "", "", ""],
-                "titles": ["起始年", "月", "日", "时", "分",
-                           "截止年", "月", "日", "时", "分",
+                "map": ["year", "month", "day",
+                        "device", "address_type",
+                        "flows", "stays", "clicks"],
+                "titles": ["年", "月", "日",
+                           "小粉盒ID", "点位",
                            "触达用户数", "深度触达用户数", "互动用户数"],
-                "filename": "invbox_user_monitor"
+                "filename": "invbox_flow_stat"
             }
         }
 
