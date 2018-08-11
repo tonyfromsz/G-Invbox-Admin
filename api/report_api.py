@@ -16,7 +16,7 @@ Rpt = Report()
 
 data_mapping = {"order": Rpt.order_export_handling,
                 "inventory": Rpt.inventory_export_handling,
-                "user-monitor": Rpt.flow_stat_export_handling
+                "flows": Rpt.flow_stat_export_handling
                 }
 
 xlsx = Xlsx()
