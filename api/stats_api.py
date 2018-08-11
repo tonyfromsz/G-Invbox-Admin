@@ -591,15 +591,15 @@ def dashboard(scale):
     data = {}
     if scale == "flows":
         data = rpc.invbox.dashboard_flow_volume()
-    if scale == "flows-rank":
+    if scale == "flowsRank":
         data = rpc.invbox.dashboard_flow_volume_rank()
-    if scale == "user-stats":
+    if scale == "userStats":
         data = rpc.invbox.dashboard_user_stats()
-    if scale == "device-stats":
+    if scale == "deviceStats":
         data = rpc.invbox.dashboard_device_stats()
-    if scale == "sales-stats":
+    if scale == "salesStats":
         data = rpc.invbox.dashboard_sales_stats()
-    if scale == "item-device-rank":
+    if scale == "itemDeviceRank":
         data = rpc.invbox.dashboard_item_device_rank()
 
     return jsonify(data)
