@@ -91,7 +91,6 @@ class Xlsx:
         }
 
     def run(self, data, item, filename=None):
-        # assert callable(function)
         data_dict = self.xslx_mapping[item]
         titles_list = data_dict.get("titles")
         mapping_list = data_dict.get("map")

@@ -575,15 +575,6 @@ class ConversionAPI(MethodView):
         return stats
 
 
-# dashboard_mapping = {
-#     "flows": rpc.invbox.dashboard_flow_volume,
-#     "flow-rank": rpc.invbox.dashboard_flow_volume_rank,
-#     "user-stats": rpc.invbox.dashboard_user_stats,
-#     "device-stats": rpc.invbox.dashboard_device_stats,
-#     "sales-stats": rpc.invbox.dashboard_sales_stats,
-#     "item-device-rank": rpc.invbox.dashboard_item_device_rank
-# }
-
 @api.route("/admin/stats/flows")
 @login_required
 def day_device_stats():
