@@ -22,7 +22,7 @@ data_mapping = {"order": Rpt.order_export_handling,
 xlsx = Xlsx()
 
 
-@api.route("/media/export/<string:item>")
+@api.route("/admin/media/export/<string:item>")
 @login_required
 def export(item):
     if item not in data_mapping.keys():
