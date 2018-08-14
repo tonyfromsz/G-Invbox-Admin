@@ -5,7 +5,7 @@ import os
 class Config:
     DEBUG = False
 
-    DOMAIN = "http://invbox.yuiitec.com"
+    DOMAIN = "http://api.invgirls.com/"
 
     MEDIA_PATH = "/src/data/media"
 

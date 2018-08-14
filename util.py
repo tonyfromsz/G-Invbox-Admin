@@ -75,7 +75,7 @@ class Xlsx:
             "inventory": {
                 "map": ["year", "month", "day", "hour", "minute", "second",
                         "device_id", "address_type", "road_id", "item_name", "amount"],
-                "titles": ["年", "月", "日", "时", "分", "秒"
+                "titles": ["年", "月", "日", "时", "分", "秒",
                           "小粉盒ID", "小粉盒所在地", "货道ID", "产品名称", "剩余库存"],
                 "filename": "invbox_invents"
             },

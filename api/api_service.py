@@ -22,7 +22,7 @@ class Report:
                                      export=True
                                      )
         result = []
-        if data.get("items")
+        if data.get("items"):
             for rec in data.get("items"):
                 device = rec["device"]
                 item = rec["item"]
@@ -38,7 +38,7 @@ class Report:
                     "year": create_at.year,      # 年
                     "month": create_at.month,    # 月
                     "day": create_at.day,        # 日
-                    "device_id": device.get("id"),          # 小粉盒ID
+                    "device_id": device.get("no"),          # 小粉盒ID
                     "address_type": device.get("address"),    # 点位
                     "user_id": user.get("id"),              # 后台会员ID
                     "user_mobile": user.get("mobile"),      # 手机号
@@ -95,9 +95,9 @@ class Report:
                 "hour": now.hour,
                 "minute": now.minute,
                 "second": now.second,
-                "device_id": device.get("id"),
-                "address_type": device.get("address_type"),
-                "road_id": rec.get("id"),
+                "device_id": device.get("no"),
+                "address_type": device.get("address"),
+                "road_id": rec.get("no"),
                 "item_name": item.get("name"),
                 "amount": rec.get("amount")
             }
