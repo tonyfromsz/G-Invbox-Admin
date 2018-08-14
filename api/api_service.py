@@ -22,35 +22,36 @@ class Report:
                                      export=True
                                      )
         result = []
-        for rec in data["items"]:
-            device = rec["device"]
-            item = rec["item"]
-            redeem = rec["redeem"]
-            road = rec["road"]
-            user = rec["user"]
-            wxuserid = user.get("wxuserid") or ""
-            aliuserid = user.get("aliuserid") or ""
+        if data.get("items")
+            for rec in data.get("items"):
+                device = rec["device"]
+                item = rec["item"]
+                redeem = rec["redeem"]
+                road = rec["road"]
+                user = rec["user"]
+                wxuserid = user.get("wxuserid") or ""
+                aliuserid = user.get("aliuserid") or ""
 
-            create_at = dte.datetime.strptime(rec["createdAt"], "%Y-%m-%d %H:%M:%S")
+                create_at = dte.datetime.strptime(rec["createdAt"], "%Y-%m-%d %H:%M:%S")
 
-            record = {
-                "year": create_at.year,      # 年
-                "month": create_at.month,    # 月
-                "day": create_at.day,        # 日
-                "device_id": device["id"],          # 小粉盒ID
-                "address_type": device["address"],    # 点位
-                "user_id": user["id"],              # 后台会员ID
-                "user_mobile": user["mobile"],      # 手机号
-                "wx_ali_user_id": wxuserid + "/" + aliuserid,   # 微信号/支付宝id
-                "user_name": user["username"],      # 用户名
-                "item_no": item["no"],              # 商品编号
-                "item_brand": item["brand_name"],   # 商品品牌
-                "item_name": item["name"],          # 产品名
-                "count": rec["count"],             # 购买数量
-                "pay_money": rec["payMoney"],      # 支付金额
-                "consume_code": redeem.get("code")  # 兑换吗
-            }
-            result.append(record)
+                record = {
+                    "year": create_at.year,      # 年
+                    "month": create_at.month,    # 月
+                    "day": create_at.day,        # 日
+                    "device_id": device.get("id"),          # 小粉盒ID
+                    "address_type": device.get("address"),    # 点位
+                    "user_id": user.get("id"),              # 后台会员ID
+                    "user_mobile": user.get("mobile"),      # 手机号
+                    "wx_ali_user_id": wxuserid + "/" + aliuserid,   # 微信号/支付宝id
+                    "user_name": user.get("username"),      # 用户名
+                    "item_no": item.get("no"),              # 商品编号
+                    "item_brand": item.get("brand_name"),   # 商品品牌
+                    "item_name": item.get("name"),          # 产品名
+                    "count": rec.get("count"),             # 购买数量
+                    "pay_money": rec.get("payMoney"),      # 支付金额
+                    "consume_code": redeem.get("code") # 兑换吗
+                }
+                result.append(record)
         if current_user["role"] == 0:
             return {
                 "data": result,
@@ -94,11 +95,11 @@ class Report:
                 "hour": now.hour,
                 "minute": now.minute,
                 "second": now.second,
-                "device_id": device["id"],
-                "address_type": device["address_type"],
-                "road_id": rec["id"],
-                "item_name": item["name"],
-                "amount": rec["amount"]
+                "device_id": device.get("id"),
+                "address_type": device.get("address_type"),
+                "road_id": rec.get("id"),
+                "item_name": item.get("name"),
+                "amount": rec.get("amount")
             }
             result.append(record)
         return {
