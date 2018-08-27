@@ -5,6 +5,16 @@ from flask import current_app as app
 from flask_util import current_user, jsonify
 from app import rpc
 
+order_status_dict = {
+    1: "等待付款",
+    2: "已付款；出货中",
+    3: "出货成功",
+    10: "订单失效",
+    11: "出货失败",
+    13: "退款完成",
+    15: "出货超时"
+}
+
 
 class Report:
 
@@ -49,7 +59,8 @@ class Report:
                     "item_name": item.get("name"),          # 产品名
                     "count": rec.get("count"),             # 购买数量
                     "pay_money": rec.get("payMoney"),      # 支付金额
-                    "consume_code": redeem.get("code") # 兑换吗
+                    "consume_code": redeem.get("code"),    # 兑换吗
+                    "order_status": order_status_dict.get(rec.get("status"))      # 订单状态
                 }
                 result.append(record)
         if current_user["role"] == 0:

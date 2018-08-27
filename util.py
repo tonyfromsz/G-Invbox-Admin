@@ -65,11 +65,11 @@ class Xlsx:
                 "map": ["year", "month", "day",
                         "device_id", "address_type",
                         "user_id", "user_mobile", "wx_ali_user_id", "user_name",
-                        "item_no", "item_brand", "item_name", "count", "pay_money", "consume_code"],
+                        "item_no", "item_brand", "item_name", "count", "pay_money", "consume_code", "order_status"],
                 "titles": ["年", "月", "日",
                            "小粉盒ID", "点位",
                            "小粉盒ID（会员一级ID）", "手机号（会员二级ID）", "微信号/支付宝ID（会员三级ID）", "用户名（默认的微信名）",
-                           "商品编号", "商品品牌", "产品名", "购买数量", "支付金额", "兑换码"],
+                           "商品编号", "商品品牌", "产品名", "购买数量", "支付金额", "兑换码", "订单状态"],
                 "filename": "invbox_orders"
             },
             "inventory": {
